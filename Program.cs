@@ -3,6 +3,13 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+
+//TODO: prompt user to extract lyrics to plain text
+//TODO: query history
+//TODO: logger
+//TODO: validate artist and track title
+//TODO: cache lyrics for n hours to reduce api calls and speed up repeated lookups
+
 class Program
 {
     static async Task Main()
@@ -27,7 +34,7 @@ class Program
             HttpResponseMessage response = await client.GetAsync(url);
             string result = await response.Content.ReadAsStringAsync();
             using JsonDocument doc = JsonDocument.Parse(result);
-            if (!doc.RootElement.TryGetProperty("lyrics", out JsonElement lyricsElement))
+            if (!doc.RootElement.TryGetProperty("lyrics", out JsonElement lyricsElement)) //tries to load lyrics from JsonDocument
             {
                 Console.WriteLine("Lyrics not found in response");
                 return;
