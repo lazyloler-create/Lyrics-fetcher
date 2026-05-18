@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
+//TODO: CLEAN UP CODe
 //TODO: prompt user to extract lyrics to plain text
 //TODO: query history
 //TODO: logger
