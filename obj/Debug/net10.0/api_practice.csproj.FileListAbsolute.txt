@@ -1,0 +1,15 @@
+/home/andrej/api_practice/api_practice/bin/Debug/net10.0/api_practice
+/home/andrej/api_practice/api_practice/bin/Debug/net10.0/api_practice.deps.json
+/home/andrej/api_practice/api_practice/bin/Debug/net10.0/api_practice.runtimeconfig.json
+/home/andrej/api_practice/api_practice/bin/Debug/net10.0/api_practice.dll
+/home/andrej/api_practice/api_practice/bin/Debug/net10.0/api_practice.pdb
+/home/andrej/api_practice/api_practice/obj/Debug/net10.0/api_practice.GeneratedMSBuildEditorConfig.editorconfig
+/home/andrej/api_practice/api_practice/obj/Debug/net10.0/api_practice.AssemblyInfoInputs.cache
+/home/andrej/api_practice/api_practice/obj/Debug/net10.0/api_practice.AssemblyInfo.cs
+/home/andrej/api_practice/api_practice/obj/Debug/net10.0/api_practice.csproj.CoreCompileInputs.cache
+/home/andrej/api_practice/api_practice/obj/Debug/net10.0/api_practice.sourcelink.json
+/home/andrej/api_practice/api_practice/obj/Debug/net10.0/api_practice.dll
+/home/andrej/api_practice/api_practice/obj/Debug/net10.0/refint/api_practice.dll
+/home/andrej/api_practice/api_practice/obj/Debug/net10.0/api_practice.pdb
+/home/andrej/api_practice/api_practice/obj/Debug/net10.0/api_practice.genruntimeconfig.cache
+/home/andrej/api_practice/api_practice/obj/Debug/net10.0/ref/api_practice.dll
