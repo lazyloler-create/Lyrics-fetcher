@@ -1,67 +1,107 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 
-//TODO: CLEAN UP CODe
-//TODO: prompt user to extract lyrics to plain text
 //TODO: query history
-//TODO: logger
 //TODO: validate artist and track title
 //TODO: cache lyrics for n hours to reduce api calls and speed up repeated lookups
 
+
+//FINISH THE LOGGER IMPLEMENTATION AND INTEGRATE IT INTO THE PROGRAM
+
 class Program
 {
+    ILogger logger = new ILogger(); 
+
+
+    static string[] CleanTextLines(string lyrics)
+    {
+        if (lyrics.Contains("\\n") || lyrics.Contains("\\r\\n"))
+        {
+            lyrics = Regex.Unescape(lyrics);
+        }
+
+        lyrics = lyrics.Replace("\r\n", "\n").Replace("\r", "\n");
+        return lyrics.Split(new[] { '\n' }, StringSplitOptions.None);
+    }
+
+    static void PrintLines(string[] lines)
+    {
+        foreach (var line in lines)
+        {
+            Console.WriteLine(line);
+        }
+    }
+
     static async Task Main()
     {
-        using HttpClient client = new HttpClient();
         Console.WriteLine("Enter an artist: ");
         string? artist = Console.ReadLine();
 
-        Console.WriteLine("Enter a track: ");
-        string? title = Console.ReadLine();
-        string url = $"https://api.lyrics.ovh/v1/{artist}/{title}";
-
-        if(string.IsNullOrWhiteSpace(artist) || string.IsNullOrWhiteSpace(title))
+        if (string.IsNullOrWhiteSpace(artist))
         {
-            Console.WriteLine("An artist or track title is required!");
+            Console.WriteLine("Artist name is required!");
+            logger.LogError("User didn't provide artist name", new ArgumentException("Artist name is required!");
             return;
         }
 
+        Console.WriteLine("Enter a track: ");
+        string? title = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            Console.WriteLine("A track title is required!");
+            logger.LogError("User did not provide a track title.", new ArgumentException("Track title is required!"));
+            return;
+        }
+
+        // reuseable http client
+        using var http = new HttpClient();
+        ILyricsClient lyricsClient = new LyricsClient(http);
+
         Console.WriteLine($"Lyrics for {title} by {artist}: \n");
+
         try
         {
-            HttpResponseMessage response = await client.GetAsync(url);
-            string result = await response.Content.ReadAsStringAsync();
-            using JsonDocument doc = JsonDocument.Parse(result);
-            if (!doc.RootElement.TryGetProperty("lyrics", out JsonElement lyricsElement)) //tries to load lyrics from JsonDocument
+            string? lyrics = await lyricsClient.GetLyricsAsync(artist, title);
+
+            if (lyrics is null)
             {
-                Console.WriteLine("Lyrics not found in response");
+                Console.WriteLine("Lyrics not found.");
+                logger.LogError($"Lyrics not found for {artist} - {title}", new Exception("Lyrics not found!"));
                 return;
             }
-            string lyrics = lyricsElement.GetString() ?? string.Empty;
 
-            if(lyrics.Contains("\\n") || lyrics.Contains("\\r\\n"))
+            string[] lines = CleanTextLines(lyrics);
+            PrintLines(lines);
+
+            Console.WriteLine("\nWould you like to extract the lyrics to a plain text file? (y/n)");
+            char choice = Console.ReadKey().KeyChar;
+            if (choice == 'y' || choice == 'Y')
             {
-                lyrics = Regex.Unescape(lyrics);
+                string fileName = $"{artist} - {title}.txt";
+                File.WriteAllLines(fileName, lines);
+                Console.WriteLine($"\nLyrics extracted to {fileName}");
+                Console.WriteLine($"\nLyrics extracted to directory: {Directory.GetCurrentDirectory()}");
             }
-            
-            lyrics = lyrics.Replace("\r\n", "\n").Replace("\r", "\n");
-            string[] lines = lyrics.Split(new[] { '\n' }, StringSplitOptions.None);
-
-            foreach (var line in lines)
+            else
             {
-                Console.WriteLine(line);
+                Console.WriteLine("\nLyrics not extracted");
             }
         }
         catch (HttpRequestException ex)
         {
-            Console.WriteLine($"Request error: {ex.Message}");
+            Console.WriteLine($"\nRequest error: {ex.Message}");
         }
-        catch (JsonException ex)
+        catch (System.Text.Json.JsonException ex)
         {
-            Console.WriteLine($"JSON parse error: {ex.Message}");
+            Console.WriteLine($"\nJSON parse error: {ex.Message}");
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"\nInput error: {ex.Message}");
         }
     }
 }
