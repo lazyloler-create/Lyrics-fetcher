@@ -4,9 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
-//TODO: query history
 //TODO: cache lyrics for n hours to reduce api calls and speed up repeated lookups
-
 
 class Program
 {
@@ -45,12 +43,11 @@ class Program
         logger.LogInfo($"Lyrics extraced to {Directory.GetCurrentDirectory()}\\{fileName}");
     }
 
-    static void queries(string query, string artist, string title)
+    static void queries(string qDate, string artist, string title)
     {
         logger.LogInfo("Saving user query");
-        string queryName = query;
         string fileName = "queries.txt";
-        File.AppendAllText(fileName, $"{queryName + '\n'} {artist} - {title}{Environment.NewLine}");
+        File.AppendAllText(fileName, $"{qDate + '\n'} {artist} - {title}{Environment.NewLine}");
         logger.LogInfo("Saved user query to queries.txt \n");
         logger.LogInfo($"queries.txt file path: {Directory.GetCurrentDirectory()}\\{fileName} \n");
     }
