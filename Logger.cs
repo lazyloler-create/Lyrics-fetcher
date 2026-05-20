@@ -3,7 +3,7 @@ using System.IO;
 
 public class Logger : ILogger
 {
-    void log(string message)
+    public void Log(string message)
     {
         string logFilePath = "LyricsFetcher.log";
         string logEntry = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - {message}";
@@ -17,7 +17,7 @@ public class Logger : ILogger
         }
     }
 
-    void LogError(string message, Exception ex)
+    public void LogError(string message, Exception ex)
     {
         string logFilePath = "LyricsFetcher.log";
         string logEntry = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - ERROR: {message} - Exception: {ex.Message}";
@@ -31,13 +31,13 @@ public class Logger : ILogger
         }
     }
     
-    void LogInfo(string message)
+    public void LogInfo(string message)
     {
-        log($"INFO: {message}");
+        Log($"INFO: {message}");
     }
 
-    void LogWarning(string message)
+    public void LogWarning(string message, Exception ex)
     {
-        log($"WARNING: {message}");
+        Log($"WARNING: {message} - Exception: {ex.Message}");
     }
 }
