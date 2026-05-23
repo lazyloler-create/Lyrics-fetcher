@@ -1,4 +1,4 @@
-# Lyrics Fetcher
+## Lyrics Fetcher
 
 A C# console application that fetches song lyrics from a lyrics API.
 
@@ -10,18 +10,15 @@ A C# console application that fetches song lyrics from a lyrics API.
 
 ## Setup
 
-1. **Get an API Key**  
-   - Sign up at your chosen lyrics API provider  
-   - Get your free API key  
-
-2. **Configure the Application**  
-   - Create an appsettings.json  
-
-3. **Build the Application**  
+1.**Clone the git repository**
+```bash
+   git clone https://github.com/lazyloler-create/Lyrics-fetcher
+```
+2. **Build the Application**  
    ```bash
    dotnet build MySolution.slnx
    ```
-4. **Run the Application**  
+3. **Run the Application**  
    ```bash
    dotnet run
    ```
