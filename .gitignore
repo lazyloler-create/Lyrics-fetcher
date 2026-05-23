@@ -1,5 +1,8 @@
 .vs/
 bin/
 obj/
+cache/
+Logs/
 *.user
 *.suo
+queries.txt

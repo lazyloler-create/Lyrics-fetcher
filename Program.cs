@@ -1,10 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using System.Text.RegularExpressions;
-
-//TODO: cache lyrics for n hours to reduce api calls and speed up repeated lookups
+using System.IO;
 
 class Program
 {
@@ -52,6 +48,53 @@ class Program
         logger.LogInfo($"queries.txt file path: {Directory.GetCurrentDirectory()}\\{fileName} \n");
     }
 
+    public class LyricsEntry
+    {
+        public string Artist { get; set; } = "";
+        public string Title { get; set; } = "";
+        public string[] Lyrics { get; set; } = Array.Empty<string>();
+    }
+
+    public class LyricsCache
+    {
+        private readonly string cacheFolder = "cache";
+
+        public LyricsCache()
+        {
+            if (!Directory.Exists(cacheFolder))
+            {
+                Directory.CreateDirectory(cacheFolder);
+            }
+        }
+        public void SaveLyrics(string[] lyrics, string artist, string title)
+        {
+        var obj = new LyricsEntry
+        {
+            Artist = artist,
+            Title = title,
+            Lyrics = lyrics
+        };
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        var jsonString = JsonSerializer.Serialize(obj, options);
+        string file = $"{artist}-{title}".Replace(" ", "_") + ".json";
+        string path = Path.Combine(cacheFolder, file);
+        File.WriteAllText(path, jsonString);
+        logger.LogInfo($"Lyrics saved to {file}.json in {Directory.GetCurrentDirectory}\\{file} \n");
+        }
+
+        public string[]? LoadLyrics(string artist, string title)
+        {
+            string file = $"{artist}-{title}".Replace(" ", "_") + ".json";
+            string path = Path.Combine(cacheFolder, file);
+
+            if (File.Exists(path))
+            {
+                var obj = JsonSerializer.Deserialize<LyricsEntry>(File.ReadAllText(path));
+                return obj?.Lyrics;
+            }
+            return null;
+        }
+    }
     static async Task Main()
     {
         Console.WriteLine("Enter an artist: ");
@@ -87,6 +130,17 @@ class Program
 
         try
         {
+            var cache = new LyricsCache();
+            var cachedLyrics = cache.LoadLyrics(artist, title);
+            
+            if (cachedLyrics != null)
+            {
+                Console.WriteLine("Loaded lyrics from cache:");
+                foreach (var line in cachedLyrics)
+                Console.WriteLine(line);
+                return;
+            }
+
             string? lyrics = await lyricsClient.GetLyricsAsync(artist, title);
 
             if (lyrics is null)
@@ -97,6 +151,9 @@ class Program
             }
 
             string[] lines = CleanTextLines(lyrics);
+
+            
+            cache.SaveLyrics(lines, artist, title);
             PrintLines(lines);
 
             Console.WriteLine("\nWould you like to extract the lyrics to a plain text file? (y/n)");

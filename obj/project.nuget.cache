@@ -1,8 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "5dbog2GOpzA=",
+  "dgSpecHash": "eoMdLX89L+k=",
   "success": true,
-  "projectFilePath": "/home/andrej/api_practice/api_practice/api_practice.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/andrej/api_practice/Lyrics-fetcher/api_practice.csproj",
+  "expectedPackageFiles": [
+    "/home/andrej/.nuget/packages/microsoft.extensions.caching.abstractions/10.0.8/microsoft.extensions.caching.abstractions.10.0.8.nupkg.sha512",
+    "/home/andrej/.nuget/packages/microsoft.extensions.caching.memory/10.0.8/microsoft.extensions.caching.memory.10.0.8.nupkg.sha512",
+    "/home/andrej/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/10.0.8/microsoft.extensions.dependencyinjection.abstractions.10.0.8.nupkg.sha512",
+    "/home/andrej/.nuget/packages/microsoft.extensions.logging.abstractions/10.0.8/microsoft.extensions.logging.abstractions.10.0.8.nupkg.sha512",
+    "/home/andrej/.nuget/packages/microsoft.extensions.options/10.0.8/microsoft.extensions.options.10.0.8.nupkg.sha512",
+    "/home/andrej/.nuget/packages/microsoft.extensions.primitives/10.0.8/microsoft.extensions.primitives.10.0.8.nupkg.sha512"
+  ],
   "logs": []
 }
