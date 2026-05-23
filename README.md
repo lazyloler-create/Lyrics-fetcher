@@ -1,19 +1,18 @@
-## Lyrics Fetcher
+# Lyrics Fetcher
 
 A C# console application that fetches song lyrics from a lyrics API.
 
 ## Features
-- Get lyrics for any artist and track  
-- Cache lyrics locally in JSON format  
-- Load lyrics from cache to avoid repeated API calls  
-- Export lyrics to plain text files  
+- Get lyrics for any artist and track
+- Cache lyrics locally in JSON format
+- Load lyrics from cache to avoid repeated API calls
+- Export lyrics to plain text files
 
 ## Setup
 
-1.**Clone the git repository**
+1. **Clone the git repository**
    ```bash
    git clone https://github.com/lazyloler-create/Lyrics-fetcher
-   ```
 2. **Build the Application**  
    ```bash
    dotnet build MySolution.slnx
