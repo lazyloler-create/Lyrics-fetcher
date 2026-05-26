@@ -4,7 +4,7 @@ A C# console application that fetches song lyrics from a lyrics API.
 
 ## Features
 - Get lyrics for any artist and track
-- Get random word of the day
+- Get random when you run the program
 - Cache lyrics locally in JSON format
 - Load lyrics from cache to avoid repeated API calls
 - Export lyrics to plain text files
