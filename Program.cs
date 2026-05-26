@@ -96,7 +96,7 @@ class Program
         }
     }
 
-    private async Task<string> WordOfTheDay(HttpClient http)
+    private async Task<string> WordOfTheProgram(HttpClient http)
     {
         try {
             IWordClient randomWord = new WordClient(http);
@@ -145,7 +145,7 @@ class Program
         ILyricsClient lyricsClient = new LyricsClient(http);
 
         Console.WriteLine("Random word of the day: ");
-        await WordOfTheDay(http);
+        await WordOfTheProgram(http);
 
         Console.WriteLine($"Lyrics for {title} by {artist}: \n");
         logger.LogInfo($"Fetched lyrics for {title} by {artist} \n");
