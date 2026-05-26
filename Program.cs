@@ -95,6 +95,25 @@ class Program
             return null;
         }
     }
+
+    private async Task<string> WordOfTheDay(HttpClient http)
+    {
+        try {
+            IWordClient randomWord = new WordClient(http);
+            IWordMeaningClient wordMeaningClient = new WordMeaningClient(http);
+            string meaning = await wordMeaningClient.GetWordMeaning("");
+            string word = await randomWord.GetRandomWord("");
+            Console.WriteLine($"{word} - {meaning}");
+        }
+        catch (Exception ex) {
+            Console.WriteLine($"Error fetching word of the day: {ex.Message}");
+        }
+        catch(HttpRequestException ex)
+        {
+            Console.WriteLine($"HTTP request error while fetching word of the day: {ex.Message}");
+        }
+    }
+
     static async Task Main()
     {
         Console.WriteLine("Enter an artist: ");
@@ -124,6 +143,9 @@ class Program
         // reuseable http client
         using var http = new HttpClient();
         ILyricsClient lyricsClient = new LyricsClient(http);
+
+        Console.WriteLine("Random word of the day: ");
+        await WordOfTheDay(http);
 
         Console.WriteLine($"Lyrics for {title} by {artist}: \n");
         logger.LogInfo($"Fetched lyrics for {title} by {artist} \n");

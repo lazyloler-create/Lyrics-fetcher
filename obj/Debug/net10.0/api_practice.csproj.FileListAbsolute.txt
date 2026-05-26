@@ -51,3 +51,6 @@ C:/Users/Ucenik/source/repos/lazyloler-create/Lyrics-fetcher/obj/Debug/net10.0/r
 /home/andrej/api_practice/Lyrics-fetcher/obj/Debug/net10.0/api_prac.E7DCABEB.Up2Date
 /home/andrej/api_practice/Lyrics-fetcher/obj/Debug/net10.0/api_practice.genruntimeconfig.cache
 /home/andrej/api_practice/Lyrics-fetcher/obj/Debug/net10.0/ref/api_practice.dll
+C:\Users\Ucenik\source\repos\lazyloler-create\Lyrics-fetcher\obj\Debug\net10.0\api_practice.dll
+C:\Users\Ucenik\source\repos\lazyloler-create\Lyrics-fetcher\obj\Debug\net10.0\refint\api_practice.dll
+C:\Users\Ucenik\source\repos\lazyloler-create\Lyrics-fetcher\obj\Debug\net10.0\api_practice.pdb
