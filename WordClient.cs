@@ -33,6 +33,12 @@ public class WordClient
             logger.LogError($"HTTP request error while fetching a random word: {ex.Message}");
             return string.Empty;
         }
+        catch (HttpProtocolException)
+        {
+            Console.WriteLine($"HTTP protocol error while fetching random word.");
+            logger.LogError($"HTTP protocol error while fetching a random word. \n");
+            return string.Empty;
+        }
     }
 
     string result = await GetRandomWord(word);

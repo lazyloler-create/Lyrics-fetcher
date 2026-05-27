@@ -119,22 +119,8 @@ class Program
         Console.WriteLine("Enter an artist: ");
         string? artist = Console.ReadLine();
 
-        if (string.IsNullOrWhiteSpace(artist))
-        {
-            Console.WriteLine("Artist name is required!");
-            logger.LogError("User didn't provide artist name", new ArgumentException("Artist name is required!"));
-            return;
-        }
-
         Console.WriteLine("Enter a track: ");
         string? title = Console.ReadLine();
-
-        if (string.IsNullOrWhiteSpace(title))
-        {
-            Console.WriteLine("A track title is required!");
-            logger.LogError("User did not provide a track title. \n", new ArgumentException("Track title is required!"));
-            return;
-        }
 
         DateTime dateTime = DateTime.Now;
         string formattedDateTime = dateTime.ToString("dd-MM-yyyy HH:mm:ss");
@@ -207,5 +193,11 @@ class Program
             Console.WriteLine($"\nInput error: {ex.Message}");
             logger.LogError("Input error while fetching lyrics \n", ex);
         }
+        catch (HttpProtocolException)
+        {
+            Console.WriteLine("Http protocol failed while fetching lyrics.");
+            logger.LogError("Http protocol failed while fetching lyrics \n", new HttpProtocolException("Http protocol failed while fetching lyrics \n"));
+        }
     }
+    return;
 }
